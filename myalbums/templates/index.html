@@ -166,8 +166,7 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <a href="javascript:void(0);"
-                                   >
+                                <a href="javascript:void(0);">
                                     <img src="{{ song.thumbnail.url }}" alt=""
                                          style="height: 180px; width: 290px"
                                          class="card-img--radius-lg">
@@ -186,6 +185,7 @@
                     <div class="d-flex flex-wrap align-items-end">
                         <div class="flex-grow-1"><h4>{% trans 'Featured Artists' %}</h4>
                             <p>{% trans 'Select you best to listen' %}</p></div>
+
                         <a href="{% url 'artist' %}" class="btn btn-sm btn-pill btn-air btn-primary">{% trans 'View All' %}</a></div>
                     <hr>
                 </div>
@@ -205,6 +205,7 @@
                                 </div>
                             {% endfor %}
                         </div>
+
 
             </div>
             <div class="section">

@@ -2,15 +2,18 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.contrib import messages
 from django.shortcuts import render, redirect
-from django.urls import reverse_lazy
-from django.utils.decorators import method_decorator
-from django.views.generic import CreateView, DetailView, DeleteView, ListView
-from .models import Song, Artist, Category, Album, Review, User, Profile
-# from utils.song_utils import generate_key
+
 from .forms import UserUpdateForm, ProfileUpdateForm
 from .forms import RegisterForm
+from django.http import JsonResponse, HttpResponseRedirect
+from django.views.generic import CreateView, DetailView, DeleteView, ListView
+from .models import *
+from .forms import SongUploadForm
 from tinytag import TinyTag
-from django.http import  HttpResponseRedirect
+from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+from django.shortcuts import render
+
 
 def index(request):
     context = {
@@ -20,10 +23,8 @@ def index(request):
     }  
     return render(request, "index.html", context)
 
-
 class CategoryListView(ListView):
     model = Category
-
 
 class CategoryDetailView(DetailView):
     model = Category
@@ -36,6 +37,8 @@ class SongListView(ListView):
 class SongDetailView(DetailView):
     model = Song
 
+class ArtistDetailView(DetailView):
+    model = Artist
 
 class ArtistListView(ListView):
     model = Artist
@@ -62,14 +65,69 @@ def profile(request):
     return render(request, 'registration/profile.html', context)
 
 
-class ArtistDetailView(DetailView):
-    model = Artist
-
-
 class HotSongListView(ListView):
     model = Song
     template_name = 'myalbums/hot_music.html'
     context_object_name = 'songs'
+
+class SongUploadView(CreateView):
+    form_class = SongUploadForm
+    template_name = "songs/create.html"
+
+    @method_decorator(login_required(login_url=reverse_lazy('index')))
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(self.request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(SongUploadView, self).get_context_data(**kwargs)
+        context['artists'] = Artist.objects.all()
+        context['category'] = Category.objects.all()
+        return context
+
+
+    def post(self, request, *args, **kwargs):
+
+        form = self.get_form()
+        print(form)
+        if form.is_valid():
+
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_invalid(self, form):
+        return JsonResponse(form.errors, status=200)
+
+    def form_valid(self, form):
+        song = TinyTag.get(self.request.FILES['song'].file.name)
+        form.instance.playtime = song.duration
+        form.instance.size = song.filesize
+        artists = []
+        for a in self.request.POST.getlist('artists[]'):
+            try:
+                artists.append(int(a))
+            except:
+                artist = Artist.objects.create(name=a)
+                artists.append(artist)
+        form.save()
+        form.instance.artist.set(artists)
+        form.save()
+        data = {
+            'status': True,
+            'message': "Successfully submitted form data.",
+            'redirect': reverse_lazy('upload-details', kwargs={'id': form.instance.id})
+        }
+        return JsonResponse(data)
+
+class SongUploadDetailsView(DetailView):
+    model = Song
+    template_name = 'songs/show.html'
+    context_object_name = 'song'
+    slug_field = 'id'
+    slug_url_kwarg = 'id'
+
+class SongDetailView(DetailView):
+    model = Song
 
 def register(request):
     if request.method == 'POST':
@@ -83,7 +141,7 @@ def register(request):
             user = form.save(commit=False)
             user.set_password(password1)
             form.save()
-            return redirect('index') 
+            return redirect('index')
     else:
         form = RegisterForm()
     return render(request, 'registration/register.html', {'form': form})

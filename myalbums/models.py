@@ -1,3 +1,4 @@
+import math
 from django.db import models
 from django.urls import reverse
 from datetime import date
@@ -10,6 +11,7 @@ from django.contrib.auth.models import (
 from time import strftime, gmtime
 from PIL import Image
 from django.db.models.signals import post_save
+
 
 
 class MyModelName(models.Model):
@@ -76,8 +78,10 @@ class Song(models.Model):
     album = models.ManyToManyField(
         'Album', help_text='Select album for this song')
     hot = models.BooleanField(default=False)
-    thumbnail = models.ImageField(upload_to="thumbnails", blank=False,default="default.jpeg")
+    thumbnail = models.ImageField(upload_to="thumbnails", blank=False, default="default.jpg")
     playtime = models.CharField(max_length=10, default="0.00")
+    song = models.FileField(upload_to="song_directory_path", default="default.mp3")
+    size = models.IntegerField(default=0)
 
     @property
     def duration(self):
@@ -96,6 +100,15 @@ class Song(models.Model):
         all_ratings = map(lambda x: x.rating, self.review_set.all())
         return np.mean(all_ratings)
 
+    @property
+    def file_size(self):
+        if self.size == 0:
+            return "0B"
+        size_name = ("B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")
+        i = int(math.floor(math.log(self.size, 1024)))
+        p = math.pow(1024, i)
+        s = round(self.size / p, 2)
+        return "%s %s" % (s, size_name[i])
 
 class Artist(models.Model):
     name_artist = models.CharField(max_length=50)
@@ -279,3 +292,4 @@ def create_user_profile(sender, instance, created, **kwargs):
         Profile.objects.create(user=instance)
 
 post_save.connect(create_user_profile, sender=User)
+

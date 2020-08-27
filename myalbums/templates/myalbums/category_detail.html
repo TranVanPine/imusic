@@ -58,6 +58,7 @@
                                         </div>
                                     </div>
                                     <a href="{{ song.get_absolute_url }}">
+
                                         {% if song.thumnail.url %}
                                             <img src="{{song.thumnail.url}}"
 
@@ -68,7 +69,7 @@
 
                                                 style="width: 350px; height: 210px"
                                                 class="card-img--radius-lg">
-                                            {% endif %}
+                                        {% endif %}
                                     </a>
                                 </div>
                                 <a href="{{ song.get_absolute_url }}" class="custom-card--link mt-2">

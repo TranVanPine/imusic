@@ -1,5 +1,5 @@
 from django import forms
-from .models import User, Profile
+from .models import *
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.contrib.auth.forms import UserCreationForm
 
@@ -89,3 +89,15 @@ class UserAdminChangeForm(forms.ModelForm):
         # This is done here, rather than on the field, because the
         # field does not have access to the initial value
         return self.initial["password"]
+
+class SongUploadForm(forms.ModelForm):
+    class Meta:
+        model = Song
+        fields = ("title", "category", "thumbnail", "song")
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        super(SongUploadForm, self).__init__(*args, **kwargs)
+
+    def clean_user(self):
+        return self.user
