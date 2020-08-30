@@ -17,14 +17,16 @@ from django.shortcuts import render
 
 def index(request):
     context = {
-        'artists' : Artist.objects.all(),
-        'genres': Category.objects.all()[:6],
+        'artists': Artist.objects.all(),
+        'categories': Category.objects.all()[:6],
         'latest_songs': Song.objects.all()[:6]
-    }  
+    }
     return render(request, "index.html", context)
+
 
 class CategoryListView(ListView):
     model = Category
+
 
 class CategoryDetailView(DetailView):
     model = Category
@@ -34,11 +36,9 @@ class SongListView(ListView):
     model = Song
 
 
-class SongDetailView(DetailView):
-    model = Song
-
 class ArtistDetailView(DetailView):
     model = Artist
+
 
 class ArtistListView(ListView):
     model = Artist
@@ -70,6 +70,7 @@ class HotSongListView(ListView):
     template_name = 'myalbums/hot_music.html'
     context_object_name = 'songs'
 
+
 class SongUploadView(CreateView):
     form_class = SongUploadForm
     template_name = "songs/create.html"
@@ -83,7 +84,6 @@ class SongUploadView(CreateView):
         context['artists'] = Artist.objects.all()
         context['category'] = Category.objects.all()
         return context
-
 
     def post(self, request, *args, **kwargs):
 
@@ -119,6 +119,7 @@ class SongUploadView(CreateView):
         }
         return JsonResponse(data)
 
+
 class SongUploadDetailsView(DetailView):
     model = Song
     template_name = 'songs/show.html'
@@ -126,8 +127,12 @@ class SongUploadDetailsView(DetailView):
     slug_field = 'id'
     slug_url_kwarg = 'id'
 
+
 class SongDetailView(DetailView):
     model = Song
+    template_name = 'songs/show.html'
+    context_object_name = 'song'
+
 
 def register(request):
     if request.method == 'POST':
@@ -135,7 +140,7 @@ def register(request):
         email = request.POST.get('email')
         password1 = request.POST.get('password')
         password2 = request.POST.get('password2')
-        data = {'username':username,'email': email, 'password1': password1, 'password1': password2}
+        data = {'username': username, 'email': email, 'password1': password1, 'password1': password2}
         form = RegisterForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
@@ -145,5 +150,3 @@ def register(request):
     else:
         form = RegisterForm()
     return render(request, 'registration/register.html', {'form': form})
-
-

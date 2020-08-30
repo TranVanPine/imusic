@@ -15,7 +15,7 @@
                     <div class="row pt-4">
                         <div class="col-xl-8 col-lg-6">
                             <h5>{{ song.title }}</h5>
-                            <p>{{ song.artist.0.name }}</p>
+                            <p>{{ song.title }}</p>
                             <div class="text-warning stars">
                                 <i class="la la-star"></i>
                                 <i class="la la-star"></i>
@@ -28,7 +28,7 @@
                                 <a href="javascript:void(0);"
                                    class="btn btn-pill btn-air btn-bold btn-danger"
                                    id="play-pause"
-                                   data-audio='{"name": "{{ song.title }}", "artist": "{{ song.artist.0.name }}", "album": "", "url": "{{ song.song.url }}", "cover_art_url": "{{ song.thumbnail.url }}"}'>
+                                   data-audio='{"name": "{{ song.title }}", "artist": "", "album": "", "url": "{{ song.song.url }}", "cover_art_url": "{{ song.thumbnail.url }}"}'>
                                     Play
                                 </a>
                             </div>
@@ -63,71 +63,13 @@
 {% block javascripts %}
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/amplitudejs@5.0.2/dist/amplitude.min.js"></script>
-    <script src="{% static 'js/custom.js' %}"></script>
-    <script src="{% static 'js/amplitude.min.js' %}"></script>
-    <script src="{% static 'js/create.js' %}"></script>
-    <script src="{% static 'js/scripts.bundle.js' %}"></script>
-    <script src="{% static 'js/select2.full.min.js' %}"></script>
-    <script src="{% static 'js/song_js.js' %}"></script>
-    <script src="{% static 'js/vendors.bundle.js' %}"></script>
     <script src="{% static 'js/wavesurfer.min.js' %}"></script>
-    <script type="text/javascript">
 
-        {#let favorite_btn = $('#btn-favorite');#}
-        {##}
-        {#favorite_btn.on('click', function () {#}
-        {#    let user = $(this).data('user');#}
-        {##}
-        {#    if (user) {#}
-        {##}
-        {#        let song_id = $(this).data('song-id');#}
-        {#        let decision = $(this).data('decision');#}
-        {##}
-        {#        $.ajaxSetup({#}
-        {#            headers: {#}
-        {#                'X-CSRFToken': csrfmiddlewaretoken#}
-        {#            }#}
-        {#        });#}
-        {##}
-        {#        $.ajax({#}
-        {#            type: 'POST',#}
-        {#            url: $(this).data('url'),#}
-        {#            data: {#}
-        {#                song_id,#}
-        {#                decision,#}
-        {#            },#}
-        {#            dataType: 'json',#}
-        {#            success: function (res) {#}
-        {#                if (res.status === true) {#}
-        {#                    if (decision === 'make') {#}
-        {#                        favorite_btn.attr('data-decision', 'remove');#}
-        {#                        favorite_btn.find('i.la-heart-o').removeClass('la-heart-o').addClass('la-heart');#}
-        {#                    } else {#}
-        {#                        favorite_btn.attr('data-decision', 'make');#}
-        {#                        favorite_btn.find('i.la-heart').removeClass('la-heart').addClass('la-heart-o');#}
-        {#                    }#}
-        {#                    toastr.options = {#}
-        {#                        "positionClass": "toast-bottom-right",#}
-        {#                    };#}
-        {#                    toastr.success(res.message);#}
-        {#                }#}
-        {#            },#}
-        {#            error: function (err) {#}
-        {#                console.log(err);#}
-        {#            }#}
-        {#        });#}
-        {#    } else {#}
-        {#        toastr.options = {#}
-        {#            "positionClass": "toast-bottom-right",#}
-        {#        };#}
-        {#        toastr.warning('Please login to continue');#}
-        {#    }#}
-        {#});#}
-
-        Amplitude.init({
+    <script>
+    Amplitude.init({
             "songs": [{
                 name: "{{ song.title }}",
-                artist: "Arebica Luna",
+                artist: "{{ song.name_artist }}",
                 album: "Mummy",
                 url: "{{ song.song.url }}",
                 cover_art_url: "{{ song.thumbnail.url }}"
@@ -228,6 +170,6 @@
         };
 
         volumeIconClick();
-    </script>
 
+    </script>
 {% endblock %}

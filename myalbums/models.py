@@ -13,7 +13,6 @@ from PIL import Image
 from django.db.models.signals import post_save
 
 
-
 class MyModelName(models.Model):
     """A typical class defining a model, derived from the Model class."""
 
@@ -115,12 +114,12 @@ class Artist(models.Model):
     birthday = models.DateField(null=True, blank=True)
     biography = models.CharField(max_length=400, null=True, help_text=(
         'Enter your biography '))
+
     def get_absolute_url(self):
         return reverse('artist-detail', args=[str(self.id)])
 
     def __str__(self):
         return self.name_artist
-
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None):

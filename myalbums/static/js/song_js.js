@@ -49,107 +49,107 @@ let favorite_btn = $('#btn-favorite');
             }
         });
 
-        Amplitude.init({
-            "songs": [{
-                name: "{{ song.title }}",
-                artist: "Arebica Luna",
-                album: "Mummy",
-                url: "{{ song.song.url }}",
-                cover_art_url: "{{ song.thumbnail.url }}"
-            }],
-            "bindings": {
-                32: 'play_pause'
-            },
-            "callbacks": {
-                'play': function () {
-                    wavesurfer.play();
-                    wavesurfer.setCurrentTime(Amplitude.getSongPlayedSeconds());
-                },
-                'timeupdate': function () {
-                    wavesurfer.setCurrentTime(Amplitude.getSongPlayedSeconds());
-                },
-                'seeked': function () {
-                    wavesurfer.setCurrentTime(Amplitude.getSongPlayedSeconds());
-                },
-                'pause': function () {
-                    wavesurfer.setCurrentTime(Amplitude.getSongPlayedSeconds());
-                    wavesurfer.pause();
-                }
-            }
-        });
-
-        window.onkeydown = function (e) {
-            return !(e.keyCode === 32);
-        };
-
-        document.getElementById('song-played-progress').addEventListener('click', function (e) {
-            let offset = this.getBoundingClientRect();
-            let x = e.pageX - offset.left;
-
-            Amplitude.setSongPlayedPercentage((parseFloat(x) / parseFloat(this.offsetWidth)) * 100);
-        });
-
-        let wavesurfer = WaveSurfer.create({
-            container: '#waveform',
-            waveColor: '#733ce6',
-            progressColor: '#bfbfbf',
-            height: 150,
-            scrollParent: false,
-            responsive: true,
-        });
-
-        wavesurfer.on('loading', function (integer) {
-            $('#waveform-load').html("Generating waves.. (" + integer + '%)');
-        });
-
-        wavesurfer.on('ready', function (percents) {
-            wavesurfer.setVolume(0);
-            $('#waveform-load').empty();
-        });
-
-        $("a[data-audio]").on("click", function () {
-            $('#audioPlayer').css('visibility', 'visible');
-            if ($(this).text().trim() === 'Play') {
-                $('.amplitude-play-pause').addClass('amplitude-playing').removeClass('amplitude-paused');
-                $(this).text('Pause');
-            } else {
-                $('.amplitude-play-pause').removeClass('amplitude-playing').addClass('amplitude-paused');
-                $(this).text('Play');
-            }
-
-            if ($('.amplitude-play-pause').hasClass('amplitude-playing')) {
-                Amplitude.play();
-            } else {
-                Amplitude.pause();
-            }
-        });
-
-        wavesurfer.on('seek', function (seeks) {
-        });
-
-        wavesurfer.load('{{ song.song.url }}');
-
-        $('.amplitude-play-pause').on('click', function () {
-            if ($(this).hasClass('amplitude-playing')) {
-                Amplitude.play();
-                $('#play-pause').text('Pause');
-            } else {
-                Amplitude.pause();
-                $('#play-pause').text('Play');
-            }
-        });
-
-        let volumeIconClick = function () {
-
-            $(document).on("click", ".volume-dropdown-menu", function (s) {
-                s.stopPropagation();
-            });
-
-            let s = $('.audio-volume input[type="range"]'), t = $(".audio-volume .btn");
-            s.on("change", function () {
-                let s = $(this), e = parseInt(s.val(), 10);
-                0 === e ? t.html('<i class="ion-md-volume-mute"></i>') : e > 0 && e < 70 ? t.html('<i class="ion-md-volume-low"></i>') : e > 70 && t.html('<i class="ion-md-volume-high"></i>')
-            })
-        };
-
-        volumeIconClick();
+        // Amplitude.init({
+        //     "songs": [{
+        //         name: "{{ song.title }}",
+        //         artist: "Arebica Luna",
+        //         album: "Mummy",
+        //         url: "{{ song.song.url }}",
+        //         cover_art_url: "{{ song.thumbnail.url }}"
+        //     }],
+        //     "bindings": {
+        //         32: 'play_pause'
+        //     },
+        //     "callbacks": {
+        //         'play': function () {
+        //             wavesurfer.play();
+        //             wavesurfer.setCurrentTime(Amplitude.getSongPlayedSeconds());
+        //         },
+        //         'timeupdate': function () {
+        //             wavesurfer.setCurrentTime(Amplitude.getSongPlayedSeconds());
+        //         },
+        //         'seeked': function () {
+        //             wavesurfer.setCurrentTime(Amplitude.getSongPlayedSeconds());
+        //         },
+        //         'pause': function () {
+        //             wavesurfer.setCurrentTime(Amplitude.getSongPlayedSeconds());
+        //             wavesurfer.pause();
+        //         }
+        //     }
+        // });
+        //
+        // window.onkeydown = function (e) {
+        //     return !(e.keyCode === 32);
+        // };
+        //
+        // document.getElementById('song-played-progress').addEventListener('click', function (e) {
+        //     let offset = this.getBoundingClientRect();
+        //     let x = e.pageX - offset.left;
+        //
+        //     Amplitude.setSongPlayedPercentage((parseFloat(x) / parseFloat(this.offsetWidth)) * 100);
+        // });
+        //
+        // let wavesurfer = WaveSurfer.create({
+        //     container: '#waveform',
+        //     waveColor: '#733ce6',
+        //     progressColor: '#bfbfbf',
+        //     height: 150,
+        //     scrollParent: false,
+        //     responsive: true,
+        // });
+        //
+        // wavesurfer.on('loading', function (integer) {
+        //     $('#waveform-load').html("Generating waves.. (" + integer + '%)');
+        // });
+        //
+        // wavesurfer.on('ready', function (percents) {
+        //     wavesurfer.setVolume(0);
+        //     $('#waveform-load').empty();
+        // });
+        //
+        // $("a[data-audio]").on("click", function () {
+        //     $('#audioPlayer').css('visibility', 'visible');
+        //     if ($(this).text().trim() === 'Play') {
+        //         $('.amplitude-play-pause').addClass('amplitude-playing').removeClass('amplitude-paused');
+        //         $(this).text('Pause');
+        //     } else {
+        //         $('.amplitude-play-pause').removeClass('amplitude-playing').addClass('amplitude-paused');
+        //         $(this).text('Play');
+        //     }
+        //
+        //     if ($('.amplitude-play-pause').hasClass('amplitude-playing')) {
+        //         Amplitude.play();
+        //     } else {
+        //         Amplitude.pause();
+        //     }
+        // });
+        //
+        // wavesurfer.on('seek', function (seeks) {
+        // });
+        //
+        // wavesurfer.load('{{ song.song.url }}');
+        //
+        // $('.amplitude-play-pause').on('click', function () {
+        //     if ($(this).hasClass('amplitude-playing')) {
+        //         Amplitude.play();
+        //         $('#play-pause').text('Pause');
+        //     } else {
+        //         Amplitude.pause();
+        //         $('#play-pause').text('Play');
+        //     }
+        // });
+        //
+        // let volumeIconClick = function () {
+        //
+        //     $(document).on("click", ".volume-dropdown-menu", function (s) {
+        //         s.stopPropagation();
+        //     });
+        //
+        //     let s = $('.audio-volume input[type="range"]'), t = $(".audio-volume .btn");
+        //     s.on("change", function () {
+        //         let s = $(this), e = parseInt(s.val(), 10);
+        //         0 === e ? t.html('<i class="ion-md-volume-mute"></i>') : e > 0 && e < 70 ? t.html('<i class="ion-md-volume-low"></i>') : e > 70 && t.html('<i class="ion-md-volume-high"></i>')
+        //     })
+        // };
+        //
+        // volumeIconClick();
