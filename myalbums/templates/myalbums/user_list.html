@@ -1,0 +1,42 @@
+{% extends 'layouts/base_generic.html' %}
+{% load i18n  %}
+{% load static %}
+
+{% block content %}
+
+    <main id="pageWrapper">
+
+        <div class="banner bg-home"></div>
+        <div class="main-container">
+
+            <h1>Stations</h1>
+            <h5>Where you can follow new friends</h5>
+            <hr>
+            <br> </br>
+            <br> </br>
+            {% for user in user_list %}
+            {% if user.id != request.user.id %}
+            <div class="section">
+                <div class="heading">
+                    <div class="d-flex flex-wrap align-items-end">
+                        <img  class="circular--landscape" src="{{ user.profile.image.url }}" style="width: 100px; height: 100px">
+                        <div class="col-xl-3 col-lg-9 col-sm-6"><h4><a href="{{ user.profile.get_absolute_url }}">{{ user.username }}</a></h4>
+                            <p>{{ user.email }}</p></div>
+                        <div class="col-xl-2 col-lg-9 col-sm-6"><h5>Follower</h5>
+                            <p>{{ user.get_followers }}</p></div>
+                        <div class="col-xl-2 col-lg-9 col-sm-6"><h5>Following</h5>
+                            <p>{{ user.get_followings }}</p></div>
+                        <div class="col-xl-2 col-lg-9 col-sm-6"><h5>Favorite Songs</h5>
+                            <p>{{ user.user_favorite.count }}</p></div>
+                            <a href="{{ user.profile.get_absolute_url }}" class="btn btn-sm btn-pill btn-air btn-primary">{% trans 'Profile' %}</a></div>
+                    <hr>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        {% include 'includes/footer.html' %}
+
+    </main>
+
+{% endblock %}

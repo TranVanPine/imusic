@@ -1,0 +1,199 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-08-24 13:02+0700\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: templates/includes/dropdown.html:10 templates/includes/footer.html:60
+msgid "Favorite"
+msgstr "Ưa thích"
+
+#: templates/includes/dropdown.html:15 templates/includes/footer.html:65
+msgid "Add to Playlist"
+msgstr "Thêm vào mục ưa thích"
+
+#: templates/includes/dropdown.html:20 templates/includes/footer.html:70
+msgid "Download"
+msgstr "Tải xuống"
+
+#: templates/includes/dropdown.html:25 templates/includes/footer.html:75
+#: templates/includes/footer.html:115
+msgid "Share"
+msgstr "Chia sẻ"
+
+#: templates/includes/dropdown.html:33 templates/includes/footer.html:80
+msgid "Song Info"
+msgstr "Thông tin bài hát"
+
+#: templates/includes/footer.html:95 templates/includes/footer.html:102
+msgid "Available on"
+msgstr "Có sẵn"
+
+#: templates/includes/footer.html:96
+msgid "Android"
+msgstr "Android"
+
+#: templates/includes/footer.html:103
+msgid "App Store"
+msgstr "App Store"
+
+#: templates/includes/footer.html:135
+msgid "Close"
+msgstr "Đóng"
+
+#: templates/includes/nav.html:16
+msgid "Track"
+msgstr "Track"
+
+#: templates/includes/nav.html:17 templates/index.html:125
+#: templates/index.html:189 templates/index.html:214
+msgid "View All"
+msgstr "Xem tất cả"
+
+#: templates/includes/nav.html:35
+msgid "Upload"
+msgstr "Tải lên"
+
+#: templates/includes/nav.html:45
+msgid "Hello"
+msgstr "Xin chào"
+
+#: templates/includes/nav.html:50
+msgid "Profile"
+msgstr "Hồ sơ"
+
+#: templates/includes/nav.html:54
+msgid "Logout"
+msgstr "Đăng xuất"
+
+#: templates/includes/nav.html:61
+msgid "Login"
+msgstr "Đăng nhập"
+
+#: templates/includes/nav.html:66 templates/layouts/base_generic.html:89
+msgid "Register"
+msgstr "Đăng ký"
+
+#: templates/includes/sidebar.html:19
+msgid "Browse Music"
+msgstr "Browse Music"
+
+#: templates/includes/sidebar.html:23
+msgid "Home"
+msgstr "Trang chủ"
+
+#: templates/includes/sidebar.html:29 templates/index.html:211
+msgid "Category"
+msgstr "Thư mục"
+
+#: templates/includes/sidebar.html:35
+msgid "Free Music"
+msgstr "Âm nhạc"
+
+#: templates/includes/sidebar.html:41
+msgid "Artists"
+msgstr "Nghệ sĩ"
+
+#: templates/includes/sidebar.html:47
+msgid "Stations"
+msgstr ""
+
+#: templates/includes/sidebar.html:51
+msgid "Your Music"
+msgstr "Âm nhạc của bạn"
+
+#: templates/includes/sidebar.html:55
+msgid "Favorites"
+msgstr "ưa thích"
+
+#: templates/includes/sidebar.html:61
+msgid "History"
+msgstr "Lịch sử"
+
+#: templates/index.html:20
+msgid "Dance with DJ SS"
+msgstr ""
+
+#: templates/index.html:22 templates/index.html:35
+msgid ""
+"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae "
+"consectetur, ex explicabo."
+msgstr ""
+
+#: templates/index.html:33
+msgid "Lorem ipsum"
+msgstr ""
+
+#: templates/index.html:47
+msgid "Recent"
+msgstr "gần đây"
+
+#: templates/index.html:51
+msgid "Trending"
+msgstr "Xu thế"
+
+#: templates/index.html:86
+msgid "Mummy"
+msgstr ""
+
+#: templates/index.html:87
+msgid "Arebica Luna"
+msgstr ""
+
+#: templates/index.html:105
+msgid "Deep inside"
+msgstr ""
+
+#: templates/index.html:106
+msgid "Pimila Holliwy"
+msgstr ""
+
+#: templates/index.html:122
+msgid "New Releases"
+msgstr "Bản nhạc mới"
+
+#: templates/index.html:123
+msgid "Listen recently release music"
+msgstr "Nghe nhạc phát hành gần đây"
+
+#: templates/index.html:178
+msgid "{{ song.artists.0.name }}"
+msgstr ""
+
+#: templates/index.html:187
+#, fuzzy
+#| msgid "Artists"
+msgid "Featured Artists"
+msgstr "Nghệ sĩ"
+
+#: templates/index.html:188
+msgid "Select you best to listen"
+msgstr ""
+
+#: templates/index.html:212
+#, fuzzy
+#| msgid "Select your genre"
+msgid "Select you genre"
+msgstr "Chọn thể loại "
+
+#: templates/layouts/base_generic.html:54
+msgid "Loading"
+msgstr "Đang tải"
+
+#: templates/layouts/base_generic.html:71
+msgid "Register For Awesome Listing Experience"
+msgstr "Register For Awesome Listing Experience"

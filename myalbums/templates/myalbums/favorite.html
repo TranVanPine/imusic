@@ -1,0 +1,29 @@
+{% extends 'layouts/base_generic.html' %}
+{% load i18n  %}
+{% load static %}
+
+{% block content %}
+
+    <main id="pageWrapper">
+
+        <div class="banner bg-home"></div>
+        <div class="main-container">
+
+            <h1>Favorite</h1>
+            <hr>
+            <br> </br>
+            {% for song in user.list_favorite %}
+                    <div class="d-flex flex-wrap align-items-end">
+                        <img  class="circular--landscape" src="{{ song.thumbnail.url }}" style="width: 100px; height: 100px">
+                        <div class="col-xl-3 col-lg-9 col-sm-2"><h4><a href="{{ song.get_absolute_url }}">
+                            {{ song.title }} </a></h4></div>
+                            <a href="{{ song.get_absolute_url }}" class="btn btn-sm btn-pill btn-air btn-primary">{% trans 'Play' %}</a>
+                    </div>
+                    <hr>
+            {% endfor %}
+        </div>
+        {% include 'includes/footer.html' %}
+
+    </main>
+
+{% endblock %}

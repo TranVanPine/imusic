@@ -1,0 +1,63 @@
+{% extends '../layouts/base_generic.html' %}
+{% load static %}
+
+
+{% block content %}
+
+    <main id="pageWrapper">
+        <div class="banner bg-song"></div>
+        <div class="main-container">
+            <div class="row section text-center text-md-left">
+                <div class="col-xl-3 col-lg-4 col-sm-5">
+                    {% if song.thumbnail.url %}
+                    <img src="{{ song.thumbnail.url }}" alt="" class="card-img--radius-lg" style="width: 280px; height: 280px">
+                    {% else%}
+                    <img src="{% static 'images/genre/default.jpeg' %}" alt="" class="card-img--radius-lg">
+                    {% endif %}
+                </div>
+                <div class="col-xl-9 col-lg-8 col-sm-7">
+                    <div class="row pt-8">
+                        <div class="col-xl-12 col-lg-12">
+                            <h5>{{ song.title }}</h5>
+                            <p>{{ song.artists.0.name }}</p>
+                            <!-- song.artist.all|join:"," }} -->
+                            <div class="text-warning stars">
+                                <i class="la la-star"></i>
+                                <i class="la la-star"></i>
+                                <i class="la la-star"></i>
+                                <i class="la la-star"></i>
+                                <i class="la la-star-half-empty"></i>
+                            </div>
+                            <hr>
+                            <div class="col-xl-9 col-lg-8 col-sm-7">
+                            <form action="" method="POST">
+                                    {% csrf_token %}
+                                        <input id="song" type="hidden" name="song" value="{{ song.id }}">
+                                        <input id="user" type="hidden" name="user" value="{{ request.user.id }}">
+                                         <p>Add your lyric below: </p>
+                                        <textarea  class="form-control" required rows="10" id="content" type="text" name="content" >
+                                        </textarea>
+                                        <input class="btn btn-sm btn-pill btn-air btn-primary" type="submit" value="Add Lyric" style="margin: 15px">
+                            </form>
+                         </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="section">
+                <div id="waveform-load"></div>
+                <div id="waveform"></div>
+            </div>
+        </div>
+        {% include 'includes/footer.html' %}
+    </main>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/amplitudejs@5.0.2/dist/amplitude.min.js"></script>
+    <script src="{% static 'js/wavesurfer.min.js' %}"></script>
+    <script src="{% static 'js/song_js.js' %}"></script>
+
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends '../layouts/base_generic.html' %}
+{% load static %}
+
+{% block content %}
+
+    <main id="pageWrapper">
+
+        <div class="banner bg-song"></div>
+        <div class="main-container">
+            <h1>Category</h1><br><br>
+            <div class="section row">
+            {% if category_list %}
+                {% for category in category_list %}
+                    <div class="col-xl-3 col-lg-4 col-sm-6 pb-4">
+                        <div class="custom-card">
+                            <div class="custom-card--img" style="margin-bottom: 70px;">
+                                <a href="{{ category.get_absolute_url }}">
+                                    <span class="bg-blur card-img--radius-md">{{ category.name_category }}</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            {% else %}
+                <h4>No artist</h4>
+            {% endif %}
+        </div>
+        {% include 'includes/footer.html' %}
+    </main>
+
+{% endblock %}

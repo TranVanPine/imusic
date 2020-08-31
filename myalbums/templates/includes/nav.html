@@ -1,0 +1,76 @@
+{% load static %}
+{% load i18n %}
+{% block stylesheets %}
+{% endblock %}
+<!-- <script>
+    // Material Select Initialization
+    $(document).ready(function() {
+    $('.mdb-select').materialSelect();
+}); -->
+</script>
+<header id="header" class="bg-primary">
+    <div class="d-flex align-items-center">
+        <button type="button" class="btn toggle-menu mr-3" id="openSidebar">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <form action="{% url 'search' %}" id="searchForm" method="get">
+            <button type="button" class="btn ion-ios-search"></button>
+            <input type="text" placeholder="Search song ..." class="form-control" id="search" name="search" data-search-url="../myalbums/search.html">
+            <div class="search-card" data-scrollable="true">
+                <div class="mb-3">
+                    <div class="d-flex">
+                        <span class=" text-uppercase mr-auto font-weight-bold text-dark">{% trans 'Track' %}</span>
+                        <a href="{% url 'song' %}">{% trans 'View All' %}</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <ul class="header-options d-flex align-items-center">
+            {% if request.user.is_authenticated %}
+                <li>
+                    <a href="#" class="">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                            <path fill="currentColor"
+                                  d="M16,9V7H12V12.5C11.58,12.19 11.07,12 10.5,12A2.5,2.5 0 0,0 8,14.5A2.5,2.5 0 0,0 10.5,17A2.5,2.5 0 0,0 13,14.5V9H16M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2Z">
+                            </path>
+                        </svg>
+                        {% trans 'Upload' %}
+                    </a>
+                </li>
+                <li class="dropdown fade-in">
+                    <a href="javascript:void(0);" class="d-flex align-items-center py-2"
+                       role="button" id="userMenu" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        <div>
+                            <img class="avatar avatar-sm avatar-circle" src="{{ request.user.profile.image.url }}"alt="user">
+                        </div>
+                        <span class="pl-2"> {{ request.user.username }}</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
+                        <a class="dropdown-item" href="{% url 'profile'%}">
+                            <i class="ion-md-contact"></i>
+                            <span>{% trans 'Profile' %}</span></a>
+
+                        <div class="dropdown-divider"></div>
+                        <div class="px-4 py-2">
+                            <a href="{% url 'logout'%}?next={{request.path}}" class="btn btn-sm btn-air btn-pill btn-danger">{% trans 'Logout' %}</a>
+                        </div>
+                    </div>
+                </li>
+                {% else %}
+                <li>
+                    <a href="{% url 'login' %}" >
+                        <span>{% trans 'Login' %}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'register' %}" >
+                        <span>{% trans 'Register' %}</span>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</header>

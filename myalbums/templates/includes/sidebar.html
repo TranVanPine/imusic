@@ -1,0 +1,67 @@
+{% load static %}
+{% load i18n %}
+<aside id="sidebar" class="sidebar-primary">
+    <div class="sidebar-header d-flex align-items-center">
+        <a href="/" class="brand">
+            <img src="{% static 'images/logos/logo.png' %}" alt="listen-app">
+        </a>
+        <button type="button" class="btn p-0 ml-auto" id="hideSidebar">
+            <i class="ion-md-arrow-back h3"></i>
+        </button>
+        <button type="button" class="btn toggle-menu" id="toggleSidebar">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </div>
+    <nav class="navbar">
+        <ul class="navbar-nav" data-scrollable="true">
+            <li class="nav-item nav-header">{% trans 'Browse Music' %}</li>
+            <li class="nav-item">
+                <a href="/" class="nav-link">
+                    <i class="la la-home"></i>
+                    <span>{% trans 'Home' %}</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'category' %}" class="nav-link">
+                    <i class="la la-diamond"></i>
+                    <span>{% trans 'Category' %}</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'hot-song'%}" class="nav-link">
+                    <i class="la la-music"></i>
+                    <span>{% trans 'Hot Music' %} </span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'artist' %}" class="nav-link">
+                    <i class="la la-microphone"></i>
+                    <span>{% trans 'Artists' %}</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'user-list' %}" class="nav-link">
+                    <i class="la la-bullseye"></i>
+                    <span>{% trans 'Stations' %}</span>
+                </a>
+            </li>
+            {% if user.is_authenticated %}
+                <li class="nav-item nav-header">{% trans 'Your Music' %}</li>
+                <li class="nav-item">
+                    <a href="{% url 'favorite' %}" class="nav-link">
+                        <i class="la la-heart-o"></i>
+                        <span>{% trans 'Favorites' %}</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="la la-history"></i>
+                        <span>{% trans 'History' %}</span>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+</aside>

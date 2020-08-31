@@ -1,0 +1,128 @@
+{% extends '../layouts/base_generic.html' %}
+{% load static %}
+
+
+{% block content %}
+
+    <main id="pageWrapper">
+        <div class="banner bg-song"></div>
+        <div class="main-container">
+            <div class="row section text-center text-md-left">
+                <div class="col-xl-3 col-lg-4 col-sm-5">
+                    {% if favorite.thumbnail.url %}
+                    <img src="{{ favorite.thumbnail.url }}" alt="" class="card-img--radius-lg" style="width: 280px; height: 280px">
+                    {% else%}
+                    <img src="{% static 'images/genre/default.jpeg' %}" alt="" class="card-img--radius-lg">
+                    {% endif %}
+                </div>
+                <div class="col-xl-9 col-lg-8 col-sm-7">
+                    <div class="row pt-4">
+                        <div class="col-xl-8 col-lg-6">
+                            <h5>{{ favorite.title }}</h5>
+                            <p>{{ favorite.artists.0.name }}</p>
+                            <!-- song.artist.all|join:"," }} -->
+                            <div class="text-warning stars">
+                                <i class="la la-star"></i>
+                                <i class="la la-star"></i>
+                                <i class="la la-star"></i>
+                                <i class="la la-star"></i>
+                                <i class="la la-star-half-empty"></i>
+                            </div>
+                            <div>
+                                {% if .lyric_status is True %}
+                                {{ favorite.content }}
+                                {% endif %}
+                            </div>
+                            <div class="mt-4">
+                                <a href="javascript:void(0);"
+                                   class="btn btn-pill btn-air btn-bold btn-danger"
+                                   id="play-pause"
+                                   data-audio='{"name": "{{ favorite.title }}", "artist": "{{ favorite.artists.0.name }}", "album": "", "url": "{{ favorite.song.url }}", "cover_art_url": "{{ favorite.thumbnail.url }}"}'>
+                                    Play
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-6">
+                            <div class="pt-3 pt-lg-0 text-lg-right">
+                                <form action="{% url 'song-detail' favorite.id %}" method='POST'>
+                                {% csrf_token %}
+                                <button class="btn btn-pill btn-air btn-danger btn-icon-only" id="favorite" type="submit" name ="favorite">
+                                    {% if is_favorite %}
+                                        <i class="la la-heart"></i>
+                                    {% else %}
+                                        <i class="la la-heart-o"></i>
+                                    {% endif %}
+                                </button>
+                                </form>
+                                <form action="{% url 'lyric' favorite.id%}" method='GET'>
+                                {% csrf_token %}
+                                <button class="btn btn-pill btn-air btn-warning btn-icon-only"  id="favorite" type="submit" name ="lyric">
+                                     <i class="la la-plus"></i>
+                                </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="section">
+                <div id="waveform-load"></div>
+                <div id="waveform"></div>
+            </div>
+        </div>
+    <div class="section">
+                <ul class="nav nav-tabs line-tabs line-tabs-primary text-uppercase mb-4" id="artistDetails" role="tablist">
+                    <li class="nav-item"><a class="nav-link active" id="song-tab" data-toggle="tab" href="#song" role="tab" aria-controls="song" aria-selected="true">Review</a></li>
+                    <li class="nav-item"><a class="nav-link" id="bio-tab" data-toggle="tab" href="#bio" role="tab" aria-controls="bio" aria-selected="false">Lyric</a></li>
+                </ul>
+                <div class="tab-content" id="artistDetailsContent">
+{#                    <div class="tab-pane fade show active" id="song" role="tabpanel" aria-labelledby="song-tab">#}
+{#                        <div class="row align-items-end"><span class="col-6 font-weight-bold">{{ song.review_set.all.count }} Comment</span>#}
+{#                            <div class="col-12">#}
+{#                                <hr>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="custom-list">#}
+{#                            {% for review in song.review_set.all %}#}
+{#                                <div class="custom-list--item">#}
+{#                                    <div class="text-dark custom-card--inline">#}
+{##}
+{#                                            <div class="custom-card--inline-img">#}
+{#                                                <img src="{{ review.user.image.url }}" alt="" class="card-img--radius-sm">#}
+{#                                            </div>#}
+{#                                            <div class="custom-card--inline-desc">#}
+{#                                                <a href="#">#}
+{#                                                    <p class="text-truncate mb-0">{{ review.content_review  }}</p>#}
+{#                                                 </a>#}
+{#                                            </div>#}
+{##}
+{#                                    </div>#}
+{#                                    <ul class="custom-card--labels d-flex ml-auto">#}
+{#                                        <li>{{ song.duration }}</li>#}
+{#                                        {% include 'includes/dropdown.html' %}#}
+{#                                    </ul>#}
+{#                                </div>#}
+{#                            {% endfor %}#}
+{#                        </div>#}
+{#                    </div>#}
+                    <div class="tab-pane fade show" id="bio" role="tabpanel" aria-labelledby="bio-tab">
+                        {% for lyric in favorite.get_lyric %}
+                        {% if lyric.lyric_status is True %}
+                        {{ lyric.content }}
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% include 'includes/footer.html' %}
+    </main>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/amplitudejs@5.0.2/dist/amplitude.min.js"></script>
+    <script src="{% static 'js/wavesurfer.min.js' %}"></script>
+    <script src="{% static 'js/song_js.js' %}"></script>
+
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends '../layouts/base_generic.html' %}
+{% load i18n %}
+{% load static %}
+
+
+{% block content %}
+
+    <main id="pageWrapper">
+        <div class="banner bg-song"></div>
+        <div class="main-container">
+            <div class="row section text-center text-md-left">
+                <div class="col-xl-3 col-lg-4 col-sm-5">
+                    <img src="{{ to_user.profile.image.url }}" alt="" class="card-img--radius-lg" style="width: 280px; height: 280px">
+                </div>
+                <div class="col-xl-9 col-lg-8 col-sm-7">
+                    <div class="row pt-4">
+                        <div class="col-xl-8 col-lg-6">
+                            <h2>{{ to_user.username }}</h2>
+                            <hr>
+                            <br> </br>
+                            <div class="d-flex flex-wrap align-items-end">
+
+                              <div class="col-xl-4 col-lg-9 col-sm-6"><h5>Follower</h5>
+                                  <p>{{ to_user.get_followers }}</p></div>
+                                <div class="col-xl-4 col-lg-9 col-sm-6"><h5>Following</h5>
+                                  <p>{{ to_user.get_followings }}</p></div>
+                              <div class="col-xl-4 col-lg-9 col-sm-6"><h5>Favorite Songs</h5>
+                                 <p>{{ to_user.user_favorite.count}}</p>
+                              </div>
+                              <hr>
+                            </div>
+                            </div>
+                        <div class="col-xl-4 col-lg-3">
+                            <div class="pt-3 pt-lg-3 ">
+                            <form action="{% url 'follow' to_user.id %}" method='POST'>
+                                {% csrf_token %}
+                                <button type="submit" id= "follow"  class="btn btn-sm btn-pill btn-air btn-primary" name ="follow" >
+                                    {% if is_followed %} Unfollow {% else %} Follow {% endif %}
+                                </button>
+                             </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br> </br>
+            <br> </br>
+        <div class="main-container">
+            <h3>{{ to_user.username }}'s favorite song</h3>
+            <hr>
+            {% for song in to_user.list_favorite %}
+            <div class="section">
+                <div class="heading">
+                    <div class="d-flex flex-wrap align-items-end">
+                        <img  class="circular--landscape" src="{{ song.thumbnail.url }}" style="width: 100px; height: 100px">
+                        <div class="col-xl-3 col-lg-9 col-sm-6"><h4><a href="{{ song.get_absolute_url }}">
+                            {{ song.title }}</a></h4></div>
+                        <a href="{{ song.get_absolute_url }}" class="btn btn-sm btn-pill btn-air btn-primary">{% trans 'Play' %}</a>
+                        <hr>
+                </div>
+            </div>
+            {% endfor %}
+            </div>
+        </div>
+        {% include 'includes/footer.html' %}
+        </div>
+    </main>
+
+{% endblock %}

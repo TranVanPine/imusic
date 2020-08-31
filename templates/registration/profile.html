@@ -1,0 +1,102 @@
+{% extends '../layouts/base_generic.html' %}
+{% load static %}
+{#{% load crispy_forms_tags %}#}
+{% block stylesheets %}
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
+    <link href="{% static 'css/select2-bootstrap4.min.css' %}" rel="stylesheet"/>
+    <style>
+    .circular--landscape {
+      display: inline-block;
+      position: relative;
+      width: 300px;
+      height: 300px;
+      overflow: hidden;
+      border-radius: 50%;
+    }
+
+    .circular--landscape img {
+      width: auto;
+      height: 100%;
+      margin-left: -50px;
+    }
+    </style>
+{% endblock %}
+{% block content %}
+    <main id="pageWrapper">
+        <div class="banner bg-song"></div>
+        <div class="main-container">
+            <div class="row section">
+                <div class="col-xl-10 col-md-12 mx-auto">
+                    <div class="card">
+                            {% csrf_token %}
+                            <div class="card-header">
+                                <h6 class="card-title mb-0">Your Profile</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6 col-xl-4">
+                                        <div class="upload-image">
+                                            <img  class="circular--landscape" src="{{ user.profile.image.url }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-xl-8">
+                                        <div class="form-row form-group">
+                                            <div class="col-md-7">
+                                                <div class="form-row form-group">
+                                                 <label for="userName" class="col-md-4 text-md-right col-form-label"> User Name </label>
+                                                <div class="col-md-7">
+                                                      {{ user.username}}
+                                                  </div>
+                                                </div>
+                                                <div class="form-row form-group">
+                                                 <label for="songImage" class="col-md-4 text-md-right col-form-label">Email </label>
+                                                    <div class="col-md-7">
+                                                      {{ user.email }}
+                                                  </div>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        <form method="POST" enctype="multipart/form-data">
+                                         {% csrf_token %}
+                                         <fieldset class="form-group">
+                                             <legend class="border-bottom mb-4">Profile Update</legend>
+                                             <li class="mb-3">User Name:{{ u_form.username }}</li>
+                                             <li class="mb-3">Email:{{ u_form.email }}</li>
+                                             <li class="mb-3">Avatar:{{ p_form }}</li>
+                                         </fieldset>
+                                         <div class="form-group">
+                                             <button class="btn btn-outline-info" type="submit">Update</button>
+                                         </div>
+                                     </form>
+                                        </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-sm-9 col-md-6 ">
+                        <h6 class="card-title mb-0">Follower: {{ user.followers.count }}</h6>
+                        <br> </br>
+                        {% for follow in user.list_follower  %}
+                            <a href="{{ follow.profile.get_absolute_url }}">{{ follow.username }}</a>
+                            <hr>
+                        {% endfor %}
+
+                        </div>
+
+                    <div class="col-sm-9 col-md-6 ">
+                       <h6 class="card-title mb-0">Following: {{ user.following.count }}</h6>
+                        <br> </br>
+                        {% for follow in user.list_following  %}
+                            <a href="{{ follow.profile.get_absolute_url }}">{{ follow.username }}</a>
+                            <hr>
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+                    {% include 'includes/footer.html' %}
+    </main>
+{% endblock content %}

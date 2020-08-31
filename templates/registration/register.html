@@ -1,0 +1,25 @@
+{% extends '../layouts/base_generic.html' %}
+{% block content %}
+<div  id="register" tabindex="-1" role="dialog" aria-labelledby="loginTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="border: 1px solid; margin:100px;">
+            <div class="modal-header border-bottom-0 pb-0">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <h6 class="modal-title text-center mb-3" id="loginTitle">Register For Awesome Listing Experience</h6>
+            <div class="modal-body">
+                <form action="" class="mx-4 pb-5" id="register-form" method="POST">
+                    {% csrf_token %}
+                    <table style="margin:40px ">
+                        {{ form.as_table }}
+                    </table>
+                    <p id="register-error"></p>
+                    <button type="submit" class="btn btn-block btn-bold btn-air btn-info">Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
